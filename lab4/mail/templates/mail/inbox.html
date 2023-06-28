@@ -1,0 +1,60 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h2>{{ request.user.email }}</h2>
+
+    <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
+    <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
+    <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
+    <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
+    <hr>
+
+    <div id="emails-view">
+        
+    </div>
+
+    <div id="compose-view">
+        <h3>New Email</h3>
+        <form id="compose-form">
+            <div class="form-group">
+                From: <input disabled class="form-control" value="{{ request.user.email }}">
+            </div>
+            <div class="form-group">
+                To: <input id="compose-recipients" class="form-control">
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="compose-subject" placeholder="Subject">
+            </div>
+            <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+
+    </div>
+
+    <div id="detail-view">
+        <h3>Detail Email</h3>
+        <br>
+        <form id="detail-form">
+            <div class="form-group">
+                <strong>From:</strong> <label id="detail_sender"></label>
+                <br>
+                <strong>To:</strong> <label id="detail_recipients"></label>
+                <br>
+                <strong>Subject:</strong> <label id="detail_subject"></label>
+                <br>
+                <strong>Timestamp:</strong> <label id="detail_timestamp"></label>
+            </div>
+            
+            <input type="hidden" id="detail_id" value="">
+            <textarea class="form-control" id="detail_body" disabled></textarea>
+            <input type="submit" class="btn btn-primary" value="reply"/>
+        </form>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'mail/inbox.js' %}"></script>
+{% endblock %}
